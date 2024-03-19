@@ -21,17 +21,9 @@ class MainActivity : AppCompatActivity() {
             R.drawable.three,
         )
 
-        val fragment1 = ImageFragment()
-        val fragment2 = ImageFragment()
-
-        // Create bundles to pass image array into each ImageFragment's arguments
-        val bundle1 = Bundle()
-        bundle1.putIntArray(IMAGE_ARRAY_KEY, letter_images)
-        fragment1.arguments = bundle1
-
-        val bundle2 = Bundle()
-        bundle2.putIntArray(IMAGE_ARRAY_KEY, number_images)
-        fragment2.arguments = bundle2
+        // Instantiate by calling ImageFragment factory methods
+        val fragment1 = ImageFragment.newInstance(letter_images)
+        val fragment2 = ImageFragment.newInstance(number_images)
 
         supportFragmentManager
             .beginTransaction()

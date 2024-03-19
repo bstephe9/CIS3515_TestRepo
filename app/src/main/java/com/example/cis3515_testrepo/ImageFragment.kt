@@ -49,4 +49,20 @@ class ImageFragment : Fragment() {
     fun changeImage() {
         imageView.setImageResource(images.random())
     }
+
+    // Factory method
+    companion object {
+
+        /* Kotlin way */
+        fun newInstance(images: IntArray) = ImageFragment().apply {
+            arguments = Bundle().apply { putIntArray(IMAGE_ARRAY_KEY, images) }
+
+            /* Normal way */
+            // val fragment = ImageFragment()
+            // val bundle = Bundle()
+            // bundle.putIntArray(IMAGE_ARRAY_KEY, images)
+            // fragment.arguments = bundle
+            // return fragment
+        }
+    }
 }
