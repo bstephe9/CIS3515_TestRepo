@@ -9,6 +9,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val letter_images = arrayOf(
+            R.drawable.a,
+            R.drawable.b,
+            R.drawable.c,
+        )
+
+        val number_images = arrayOf(
+            R.drawable.one,
+            R.drawable.two,
+            R.drawable.three,
+        )
+
         val fragment1 = ImageFragment()
         val fragment2 = ImageFragment()
 

@@ -18,12 +18,6 @@ class ImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        images = arrayOf(
-            R.drawable.a,
-            R.drawable.b,
-            R.drawable.c,
-        )
-
         return inflater.inflate(R.layout.fragment_image, container, false).apply {
             // Make the imageView call changeImage() instead
             imageView = findViewById<ImageView>(R.id.imageView).apply {
