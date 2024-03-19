@@ -9,29 +9,32 @@ import android.widget.ImageView
 
 class ImageFragment : Fragment() {
 
+    // Variables to be accessible in changeImage()
+    private lateinit var images: Array<Int>
+    private lateinit var imageView: ImageView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        // Defining the array of images in the ImageFragment (probably better to pass it in)
-        val images = arrayOf(
+        images = arrayOf(
             R.drawable.a,
             R.drawable.b,
             R.drawable.c,
         )
 
-        /* Retrieve the image view from the layout, setOnClickListener to display random image */
-//        // Inflate the layout for this fragment
-//        val layout = inflater.inflate(R.layout.fragment_image, container, false)
-//        val imageView = layout.findViewById<ImageView>(R.id.imageView)
-//        return layout
-
-        // Using scope functions instead
         return inflater.inflate(R.layout.fragment_image, container, false).apply {
-            findViewById<ImageView>(R.id.imageView).setOnClickListener {
-                (it as ImageView).setImageResource(images.random())
+            // Make the imageView call changeImage() instead
+            imageView = findViewById<ImageView>(R.id.imageView).apply {
+                setOnClickListener { changeImage() }
             }
         }
+    }
+
+    // A function to change the fragment's current image. The main reason for this function is that
+    // it is accessible in MainActivity.
+    fun changeImage() {
+        imageView.setImageResource(images.random())
     }
 }
