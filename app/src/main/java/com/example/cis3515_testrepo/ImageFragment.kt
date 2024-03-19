@@ -32,6 +32,12 @@ class ImageFragment : Fragment() {
         }
     }
 
+    // When fragment is created, call changeImage() to display an initial image.
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        changeImage()
+    }
+
     // A function to change the fragment's current image. The main reason for this function is that
     // it is accessible in MainActivity.
     fun changeImage() {
