@@ -8,10 +8,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val imageFragment = ImageFragment()
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.imageFragmentContainer, imageFragment)
+            .add(R.id.imageFragmentContainer1, ImageFragment())
+            .add(R.id.imageFragmentContainer2, ImageFragment())
             .commit()
     }
 }
