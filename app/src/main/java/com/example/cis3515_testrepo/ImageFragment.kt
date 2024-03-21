@@ -38,6 +38,17 @@ class ImageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Verify savedInstanceState value to see whether or not we have a current image id
+        savedInstanceState?.run {
+            currentImageId = getInt(CURRENT_IMAGE_KEY, 0)
+
+            if (currentImageId == 0)
+                changeImage()
+            else
+                changeImage(currentImageId)
+        }
+
         changeImage()
     }
 
@@ -51,7 +62,11 @@ class ImageFragment : Fragment() {
     fun changeImage() {
         // When changeImage() is called, store image id and display image
         currentImageId = images.random()
-        imageView.setImageResource(currentImageId)
+        changeImage(currentImageId)
+    }
+
+    fun changeImage(imageID: Int) {
+        imageView.setImageResource(imageID)
     }
 
     companion object {
