@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .add(R.id.imageFragmentContainer1, fragment1)
             .add(R.id.imageFragmentContainer2, fragment2)
+            .setReorderingAllowed(true)
+            .addToBackStack(null) // record this transaction to the backstack
             .commit()
 
         findViewById<Button>(R.id.button).setOnClickListener {
