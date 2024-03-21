@@ -24,11 +24,20 @@ class MainActivity : AppCompatActivity() {
         val fragment1 = ImageFragment.newInstance(letter_images)
         val fragment2 = ImageFragment.newInstance(number_images)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.imageFragmentContainer1, fragment1)
-            .add(R.id.imageFragmentContainer2, fragment2)
-            .commit()
+        /**
+         * savedInstanceState is null where there is no fragment attached to
+         * the parent activity.
+         * Therefore, we want this block to run on the first call of
+         * onCreate() only.
+         */
+        if (savedInstanceState == null)
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.imageFragmentContainer1, fragment1)
+                .add(R.id.imageFragmentContainer2, fragment2)
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit()
 
         findViewById<Button>(R.id.button).setOnClickListener {
             supportFragmentManager
