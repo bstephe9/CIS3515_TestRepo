@@ -28,13 +28,16 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .add(R.id.imageFragmentContainer1, fragment1)
             .add(R.id.imageFragmentContainer2, fragment2)
-            .setReorderingAllowed(true)
-            .addToBackStack(null) // record this transaction to the backstack
             .commit()
 
         findViewById<Button>(R.id.button).setOnClickListener {
-            fragment1.changeImage()
-            fragment2.changeImage()
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.imageFragmentContainer1, ImageFragment.newInstance(letter_images))
+                .add(R.id.imageFragmentContainer2, ImageFragment.newInstance(number_images))
+                .setReorderingAllowed(true)
+                .addToBackStack(null)
+                .commit()
         }
     }
 }
