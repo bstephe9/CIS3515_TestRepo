@@ -11,6 +11,9 @@ const val IMAGE_ARRAY_KEY = "image_array_key"
 
 class ImageFragment : Fragment() {
 
+    private val CURRENT_IMAGE_KEY = "currentImage"
+    private var currentImageId = 0
+
     private lateinit var images: IntArray
     private lateinit var imageView: ImageView
 
@@ -38,8 +41,17 @@ class ImageFragment : Fragment() {
         changeImage()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        // Store image id in outState
+        outState.putInt(CURRENT_IMAGE_KEY, currentImageId)
+    }
+
     fun changeImage() {
-        imageView.setImageResource(images.random())
+        // When changeImage() is called, store image id and display image
+        currentImageId = images.random()
+        imageView.setImageResource(currentImageId)
     }
 
     companion object {
