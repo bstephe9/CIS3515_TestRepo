@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 
 const val ORIGINAL_IMAGE_KEY = "imageToDisplay"
 class ImageDisplayFragment : Fragment() {
@@ -15,8 +16,12 @@ class ImageDisplayFragment : Fragment() {
 
     private lateinit var imageView: ImageView
 
+    lateinit var imageViewModel: ImageViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        imageViewModel = ViewModelProvider(requireActivity())[ImageViewModel::class.java]
 
         if (savedInstanceState == null) {
             arguments?.run {
