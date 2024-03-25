@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,6 +15,8 @@ const val IMAGE_ARRAY_KEY = "imagearraykey"
 class ImageListFragment : Fragment() {
     private lateinit var images: IntArray
 
+    lateinit var imageViewModel: ImageViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -21,6 +24,16 @@ class ImageListFragment : Fragment() {
                 images = it
             }
         }
+
+        /**
+         * We want to scope this fragment against the activity to which this fragment is attached.
+         * Instantiate ViewModel in onCreate() (since we can reference the activity here) and use
+         * requireActivity() to get that activity.
+         *
+         * Specify which view model to instantiate against this scope using
+         * [ImageViewModel::class.java].
+         */
+        imageViewModel = ViewModelProvider(requireActivity())[ImageViewModel::class.java]
     }
 
     override fun onCreateView(
