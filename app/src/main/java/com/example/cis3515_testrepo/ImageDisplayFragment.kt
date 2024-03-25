@@ -51,6 +51,11 @@ class ImageDisplayFragment : Fragment() {
         }
 
         changeImage(currentImageId)
+
+        // Get LiveData from ViewModel
+        imageViewModel.getSelectedImage().observe(requireActivity()) {
+            changeImage(it)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
