@@ -50,7 +50,8 @@ class ImageListFragment : Fragment() {
         with (view as RecyclerView) {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = CustomRecyclerAdapter(images) {
-
+                // Update LiveData in ViewModel when user clicks an image
+                imageViewModel.setSelectedImage(it)
             }
         }
     }
