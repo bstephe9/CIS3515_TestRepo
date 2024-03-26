@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +41,13 @@ class MainActivity : AppCompatActivity() {
         repeat(100) {
             (100 - it).toString().run {
                 Log.d("Countdown", this)
-                timerTextView.text = this
+                /**
+                 * Use a context switch to change the timerTextView. Only the UI (main) thread can
+                 * access views, so specify this with Dispatchers.Main.
+                 */
+                withContext(Dispatchers.Main) {
+                    timerTextView.text = this@run
+                }
             }
             delay(1000)
         }
