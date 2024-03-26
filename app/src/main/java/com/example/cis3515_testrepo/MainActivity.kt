@@ -26,10 +26,14 @@ class MainActivity : AppCompatActivity() {
          * Launch the coroutine.
          */
         scope.launch {
-            repeat(100) {
-                Log.d("Countdown", (100 - it).toString())
-                delay(1000)
-            }
+            countdownTimer()
+        }
+    }
+
+    suspend fun countdownTimer() {
+        repeat(100) {
+            Log.d("Countdown", (100 - it).toString())
+            delay(1000)
         }
     }
 }
