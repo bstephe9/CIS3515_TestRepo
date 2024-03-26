@@ -6,6 +6,7 @@ import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +21,14 @@ class MainActivity : AppCompatActivity() {
          */
         val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-        repeat(100) {
-            Log.d("Countdown", (100 - it).toString())
-            Thread.sleep(1000)
+        /**
+         * Launch the coroutine.
+         */
+        scope.launch {
+            repeat(100) {
+                Log.d("Countdown", (100 - it).toString())
+                Thread.sleep(1000)
+            }
         }
     }
 }
