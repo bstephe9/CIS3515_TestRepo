@@ -3,6 +3,7 @@ package com.example.cis3515_testrepo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -10,9 +11,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var timerTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        timerTextView = findViewById(R.id.timerTextView)
 
         /**
          * Define scope for coroutine.
@@ -32,7 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     suspend fun countdownTimer() {
         repeat(100) {
-            Log.d("Countdown", (100 - it).toString())
+            (100 - it).toString().run {
+                Log.d("Countdown", this)
+                timerTextView.text = this
+            }
             delay(1000)
         }
     }
