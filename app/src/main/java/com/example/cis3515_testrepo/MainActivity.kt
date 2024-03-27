@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,39 +22,30 @@ class MainActivity : AppCompatActivity() {
 
         val textDisplay = findViewById<TextView>(R.id.textDisplay)
 
+        // Queue to pass requests to.
+        val volleyQueue = Volley.newRequestQueue(this)
+
         /**
-         * Use a coroutine to extract HTML from wikipedia.
+         * StringRequest parameters:
+         *      method - the request Method to use
+         *      url - URL to fetch the string at
+         *      listener - Listener to receive the String response
+         *      errorListener - Error listener, or null to ignore error
          */
-        CoroutineScope(Dispatchers.IO).launch {
-            val url = URL("https://www.wikipedia.com")
-
-            /**
-             * Get all lines of HTML.
-             */
-            val response = url.openStream().bufferedReader().run {
-                val strBuilder = StringBuilder()
-
-                /**
-                 * Read each line, append to string builder until line == null.
-                 */
-                while (readLine().let {
-                        strBuilder.append("$it\n")
-                        it != null
-                    });
-
-                /**
-                 * Return the entire string to 'response'.
-                 */
-                strBuilder.toString()
+        val request = StringRequest(
+            Request.Method.GET,
+            "https://www.wikipedia.com",
+            {
+                // On request success, display HTML in TextView.
+                textDisplay.text = it
+            },
+            {
+                // Display a Toast if request fails.
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             }
-            Log.d("Response", response)
+        )
 
-            /**
-             * Switch context so that Main dispatcher can alter the TextView.
-             */
-            withContext(Dispatchers.Main) {
-                textDisplay.text = response
-            }
-        }
+        // Add request to volleyQueue.
+        volleyQueue.add(request)
     }
 }
