@@ -22,30 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         val textDisplay = findViewById<TextView>(R.id.textDisplay)
 
-        // Queue to pass requests to.
-        val volleyQueue = Volley.newRequestQueue(this)
-
-        /**
-         * StringRequest parameters:
-         *      method - the request Method to use
-         *      url - URL to fetch the string at
-         *      listener - Listener to receive the String response
-         *      errorListener - Error listener, or null to ignore error
-         */
-        val request = StringRequest(
-            Request.Method.GET,
-            "https://www.wikipedia.com",
-            {
-                // On request success, display HTML in TextView.
+        Volley.newRequestQueue(this)
+            .add(StringRequest(Request.Method.GET, "https://www.wikipedia.com", {
                 textDisplay.text = it
-            },
-            {
-                // Display a Toast if request fails.
+            }, {
                 Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        )
-
-        // Add request to volleyQueue.
-        volleyQueue.add(request)
+            })  )
     }
 }
