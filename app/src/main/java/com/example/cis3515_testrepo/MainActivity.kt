@@ -6,6 +6,7 @@ import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,26 @@ class MainActivity : AppCompatActivity() {
          */
         CoroutineScope(Dispatchers.IO).launch {
             val url = URL("https://www.wikipedia.com")
-            val response = url.openStream().bufferedReader().readLine() // get the first line
+
+            /**
+             * Get all lines of HTML.
+             */
+            val response = url.openStream().bufferedReader().run {
+                val strBuilder = StringBuilder()
+
+                /**
+                 * Read each line, append to string builder until line == null.
+                 */
+                while (readLine().let {
+                        strBuilder.append("$it\n")
+                        it != null
+                    });
+
+                /**
+                 * Return the entire string to 'response'.
+                 */
+                strBuilder.toString()
+            }
             Log.d("Response", response)
         }
     }
