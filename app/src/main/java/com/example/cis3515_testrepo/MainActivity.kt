@@ -3,9 +3,11 @@ package com.example.cis3515_testrepo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.StringBuilder
 import java.net.URL
 
@@ -13,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val textDisplay = findViewById<TextView>(R.id.textDisplay)
 
         /**
          * Use a coroutine to extract HTML from wikipedia.
@@ -40,6 +44,13 @@ class MainActivity : AppCompatActivity() {
                 strBuilder.toString()
             }
             Log.d("Response", response)
+
+            /**
+             * Switch context so that Main dispatcher can alter the TextView.
+             */
+            withContext(Dispatchers.Main) {
+                textDisplay.text = response
+            }
         }
     }
 }
