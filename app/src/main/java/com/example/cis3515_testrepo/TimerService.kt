@@ -25,4 +25,9 @@ class TimerService : Service() {
             stopSelf()
         }.start()
     }
+
+    override fun onDestroy() {
+        Log.d("Service State", "STOPPED")
+        super.onDestroy()
+    }
 }
