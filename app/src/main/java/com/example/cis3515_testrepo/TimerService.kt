@@ -12,22 +12,26 @@ class TimerService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        runTimer()
+        runTimer(startId)
         return super.onStartCommand(intent, flags, startId)
     }
 
-    fun runTimer() {
-        Thread {
-            for (i in 50 downTo 0) {
-                Log.d("Countdown", i.toString())
-                Thread.sleep(100)
-            }
-            stopSelf()
-        }.start()
+    fun runTimer(startId: Int) {
+        TimerThread(startId).start()
     }
 
     override fun onDestroy() {
         Log.d("Service State", "STOPPED")
         super.onDestroy()
+    }
+
+    inner class TimerThread(private val startId: Int) : Thread() {
+        override fun run() {
+            for (i in 20 downTo 0) {
+                Log.d("Countdown", i.toString())
+                Thread.sleep(250)
+            }
+            stopSelf(startId)
+        }
     }
 }
