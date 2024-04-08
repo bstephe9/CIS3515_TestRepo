@@ -8,8 +8,23 @@ import android.util.Log
 
 class TimerService : Service() {
 
+    var isPaused = false
+
+    inner class TimerBinder : Binder() {
+        fun startTimer() {
+            runTimer()
+        }
+
+        /**
+         * Simply toggles `isPaused`.
+         */
+        fun pauseTimer() {
+            isPaused = !isPaused
+        }
+    }
+
     override fun onBind(intent: Intent): IBinder {
-        TODO("Return the communication channel to the service.")
+        return TimerBinder()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -29,6 +44,7 @@ class TimerService : Service() {
     inner class TimerThread() : Thread() {
         override fun run() {
             for (i in 20 downTo 0) {
+                while(isPaused); // spin lock
                 Log.d("Countdown", i.toString())
                 Thread.sleep(250)
             }
