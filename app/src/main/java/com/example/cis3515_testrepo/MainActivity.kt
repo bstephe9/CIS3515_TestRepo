@@ -41,8 +41,12 @@ class MainActivity : AppCompatActivity() {
             BIND_AUTO_CREATE
         )
 
-        findViewById<Button>(R.id.button).setOnClickListener {
+        findViewById<Button>(R.id.startButton).setOnClickListener {
             if (isConnected) timerBinder.startTimer()
+        }
+
+        findViewById<Button>(R.id.pauseButton).setOnClickListener {
+            if (isConnected) timerBinder.pauseTimer()
         }
     }
 
