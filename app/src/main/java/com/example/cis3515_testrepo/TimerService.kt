@@ -53,6 +53,11 @@ class TimerService : Service() {
             for (i in 20 downTo 0) {
                 while(isPaused); // spin lock
                 Log.d("Countdown", i.toString())
+
+                if (::timerHandler.isInitialized) {
+                    timerHandler.sendEmptyMessage(i)
+                }
+
                 Thread.sleep(250)
             }
             stopSelf()
