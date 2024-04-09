@@ -3,10 +3,13 @@ package com.example.cis3515_testrepo
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
+import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 
 class TimerService : Service() {
+
+    lateinit var timerHandler : Handler
 
     var isPaused = false
 
@@ -20,6 +23,10 @@ class TimerService : Service() {
          */
         fun pauseTimer() {
             isPaused = !isPaused
+        }
+
+        fun setHandler(handler: Handler) {
+            timerHandler = handler
         }
     }
 
